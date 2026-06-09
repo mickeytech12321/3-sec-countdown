@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>العداد التنازلي</title>
+    <!-- استدعاء Tailwind CSS لشكل احترافي -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen bg-slate-950 text-white p-4 antialiased selection:bg-indigo-500 selection:text-white relative overflow-hidden">
+
+    <!-- خلفية جمالية خفيفة -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.08),transparent_50%)] pointer-events-none"></div>
+
+    <div class="z-10 text-center max-w-2xl mx-auto space-y-8">
+        <h1 id="title" class="text-4xl md:text-5xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 drop-shadow-sm">
+            الوقت المتبقي
+        </h1>
+
+        <div id="countdown-container" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 pt-4" dir="rtl">
+            <!-- كارت الأيام -->
+            <div class="flex flex-col items-center justify-center p-6 bg-slate-900/60 backdrop-blur-md border border-slate-800/80 rounded-2xl shadow-xl">
+                <span id="days" class="text-4xl md:text-6xl font-extrabold tabular-nums text-indigo-400">00</span>
+                <span class="text-xs md:text-sm font-medium text-slate-400 mt-2">أيام</span>
+            </div>
+            <!-- كارت الساعات -->
+            <div class="flex flex-col items-center justify-center p-6 bg-slate-900/60 backdrop-blur-md border border-slate-800/80 rounded-2xl shadow-xl">
+                <span id="hours" class="text-4xl md:text-6xl font-extrabold tabular-nums text-indigo-400">00</span>
+                <span class="text-xs md:text-sm font-medium text-slate-400 mt-2">ساعات</span>
+            </div>
+            <!-- كارت الدقائق -->
+            <div class="flex flex-col items-center justify-center p-6 bg-slate-900/60 backdrop-blur-md border border-slate-800/80 rounded-2xl shadow-xl">
+                <span id="minutes" class="text-4xl md:text-6xl font-extrabold tabular-nums text-indigo-400">00</span>
+                <span class="text-xs md:text-sm font-medium text-slate-400 mt-2">دقائق</span>
+            </div>
+            <!-- كارت الثواني -->
+            <div class="flex flex-col items-center justify-center p-6 bg-slate-900/60 backdrop-blur-md border border-slate-800/80 rounded-2xl shadow-xl">
+                <span id="seconds" class="text-4xl md:text-6xl font-extrabold tabular-nums text-indigo-400">00</span>
+                <span class="text-xs md:text-sm font-medium text-slate-400 mt-2">ثواني</span>
+            </div>
+        </div>
+
+        <p class="text-sm font-medium text-slate-500 max-w-sm mx-auto border-t border-slate-900 pt-6">
+            الموعد المحدد: 16 يوليو الساعة 11:00 صباحاً
+        </p>
+    </div>
+
+    <script>
+        // تحديد وقت النهاية: 16 يوليو 2026 الساعة 11 صباحاً بتوقيت مصر (+03:00)
+        const targetDate = new Date("2026-07-16T11:00:00+03:00").getTime();
+
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference <= 0) {
+                clearInterval(timer);
+                document.getElementById("title").innerHTML = "انتهى الوقت! 🎉";
+                document.getElementById("countdown-container").style.display = "none";
+            } else {
+                const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById("days").innerText = String(d).padStart(2, '0');
+                document.getElementById("hours").innerText = String(h).padStart(2, '0');
+                document.getElementById("minutes").innerText = String(m).padStart(2, '0');
+                document.getElementById("seconds").innerText = String(s).padStart(2, '0');
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
